@@ -83,7 +83,7 @@
   .botoes{display:flex;flex-wrap:wrap;gap:12px}
   .pagina[hidden]{display:none}
   .whats-fixo{position:fixed;right:20px;bottom:20px;width:60px;height:60px;border-radius:30px;background:var(--green);color:var(--on-green);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,.18);z-index:20}
-  @media (max-width:640px){section.pad{padding:56px 0}.lead{font-size:17px}}
+  @media (max-width:640px){section.pad{padding:56px 0}.lead{font-size:17px}header{position:static}}
 
   /* ----- Páginas de serviço ----- */
   .trilha{font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px}
