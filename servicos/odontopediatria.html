@@ -110,7 +110,20 @@
         </div>
         <a class="selo" href="https://www.google.com/maps/search/?api=1&amp;query=Nature+Odontologia+Gama+DF" target="_blank" rel="noopener"><span class="estrelas" aria-hidden="true">★★★★★</span><span><b>5,0 no Google</b> · 121 avaliações</span></a>
       </div>
-      <div class="ph" style="height:420px">[FOTO DE ATENDIMENTO INFANTIL OU DO CONSULTÓRIO KIDS]</div>
+      <div class="carrossel" role="region" aria-roledescription="carrossel" aria-label="Fotos de atendimentos infantis na Nature">
+        <ul class="trilho" tabindex="0">
+          <li class="slide" role="group" aria-roledescription="foto" aria-label="1 de 7"><img src="../img/odontopediatria/1.jpg" alt="Dr. Renan segurando um recém-nascido em atendimento de Natal" width="900" height="900"></li>
+          <li class="slide" role="group" aria-roledescription="foto" aria-label="2 de 7"><img src="../img/odontopediatria/2.jpg" alt="Dr. Renan com um bebê sorridente em frente ao letreiro da Nature" width="900" height="900" loading="lazy"></li>
+          <li class="slide" role="group" aria-roledescription="foto" aria-label="3 de 7"><img src="../img/odontopediatria/3.jpg" alt="Menino sorrindo com a medalha "Melhor sorriso do mundo" em frente ao letreiro da Nature" width="900" height="900" loading="lazy"></li>
+          <li class="slide" role="group" aria-roledescription="foto" aria-label="4 de 7"><img src="../img/odontopediatria/4.jpg" alt="Dr. Matheus e Dr. Renan com uma paciente na cadeira e o pai dela" width="900" height="900" loading="lazy"></li>
+          <li class="slide" role="group" aria-roledescription="foto" aria-label="5 de 7"><img src="../img/odontopediatria/5.jpg" alt="Dr. Matheus e Dr. Renan com um paciente em cadeira de rodas no consultório" width="900" height="900" loading="lazy"></li>
+          <li class="slide" role="group" aria-roledescription="foto" aria-label="6 de 7"><img src="../img/odontopediatria/6.jpg" alt="Dr. Renan com uma paciente em frente ao letreiro da Nature" width="900" height="900" loading="lazy"></li>
+          <li class="slide" role="group" aria-roledescription="foto" aria-label="7 de 7"><img src="../img/odontopediatria/7.jpg" alt="Dr. Renan com um grupo de crianças pacientes em frente ao letreiro da Nature" width="900" height="900" loading="lazy"></li>
+        </ul>
+        <button type="button" class="seta ant" aria-label="Foto anterior"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button type="button" class="seta prox" aria-label="Próxima foto"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+        <div class="pontos"><button type="button" class="dot" aria-label="Ver foto 1" aria-current="true"></button><button type="button" class="dot" aria-label="Ver foto 2"></button><button type="button" class="dot" aria-label="Ver foto 3"></button><button type="button" class="dot" aria-label="Ver foto 4"></button><button type="button" class="dot" aria-label="Ver foto 5"></button><button type="button" class="dot" aria-label="Ver foto 6"></button><button type="button" class="dot" aria-label="Ver foto 7"></button></div>
+      </div>
     </div>
   </section>
 
@@ -246,5 +259,37 @@
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.7-4.6A8.5 8.5 0 1 1 8 19.6L3 21z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-2-2l.8-1-1-2L9 9.5z"/></svg>
 </a>
 
+<script>
+  // Carrossel de fotos: setas, pontos, arrastar no celular e troca automática a cada 5 s
+  (function(){
+    var c = document.querySelector('.carrossel'); if (!c) return;
+    var trilho = c.querySelector('.trilho'), slides = c.querySelectorAll('.slide'), pontos = c.querySelectorAll('.dot');
+    var atual = 0, timer = null;
+    var semAnimacao = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function vaiPara(i){
+      atual = (i + slides.length) % slides.length;
+      trilho.scrollTo({ left: slides[atual].offsetLeft, behavior: semAnimacao ? 'auto' : 'smooth' });
+    }
+    function marca(){
+      var i = Math.round(trilho.scrollLeft / trilho.clientWidth);
+      atual = i;
+      pontos.forEach(function(p, k){ if (k === i) p.setAttribute('aria-current','true'); else p.removeAttribute('aria-current'); });
+    }
+    var espera; trilho.addEventListener('scroll', function(){ clearTimeout(espera); espera = setTimeout(marca, 80); });
+    c.querySelector('.ant').addEventListener('click', function(){ vaiPara(atual - 1); reinicia(); });
+    c.querySelector('.prox').addEventListener('click', function(){ vaiPara(atual + 1); reinicia(); });
+    pontos.forEach(function(p, k){ p.addEventListener('click', function(){ vaiPara(k); reinicia(); }); });
+    trilho.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowRight') { e.preventDefault(); vaiPara(atual + 1); reinicia(); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); vaiPara(atual - 1); reinicia(); }
+    });
+    function inicia(){ if (!semAnimacao && !timer) timer = setInterval(function(){ vaiPara(atual + 1); }, 5000); }
+    function para(){ clearInterval(timer); timer = null; }
+    function reinicia(){ para(); inicia(); }
+    ['mouseenter','focusin','touchstart'].forEach(function(ev){ c.addEventListener(ev, para, {passive:true}); });
+    ['mouseleave','focusout'].forEach(function(ev){ c.addEventListener(ev, inicia); });
+    inicia();
+  })();
+</script>
 </body>
 </html>
