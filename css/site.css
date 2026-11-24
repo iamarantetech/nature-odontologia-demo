@@ -86,8 +86,8 @@
   @media (max-width:640px){section.pad{padding:56px 0}.lead{font-size:17px}header{position:static}}
 
   /* ----- Páginas de serviço ----- */
-  .trilha{font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px}
-  .trilha a{text-decoration:none;color:var(--green);font-weight:600}
+  .trilha{font-size:14px;font-weight:500;color:var(--muted);display:flex;flex-wrap:wrap;align-items:center;gap:8px;line-height:1.4}
+  .trilha a{text-decoration:none;color:var(--green);font-weight:600;padding:0}
   .lista-check{list-style:none;margin:0;padding:0;display:grid;gap:14px}
   .lista-check li{display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.55}
   .lista-check li svg{flex:none;margin-top:3px;color:var(--green)}
